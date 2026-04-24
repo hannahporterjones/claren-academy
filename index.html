@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claren Academy — Master Legal AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+  @font-face {
+    font-family: 'Lardent Pro';
+    src: url('fonts/LardentPro-Slab.woff2') format('woff2'),
+         url('fonts/LardentPro-Slab.woff') format('woff');
+    font-weight: 300 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Lardent Pro';
+    src: url('fonts/LardentPro-SlabItalic.woff2') format('woff2'),
+         url('fonts/LardentPro-SlabItalic.woff') format('woff');
+    font-weight: 300 500;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  :root {
+    --paper: #F8F8F6;
+    --paper-deep: #FFFFFF;
+    --ink: #161418;
+    --ink-2: #2A252B;
+    --ink-3: #6A6169;
+    --rule: #E4E4E1;
+    --rule-soft: #EEEEEC;
+    --plum: #5B2B3A;
+    --clay: #FFFFFF;
+    --moss: #4A5D3E;
+
+    /* Stack card palette — greys + purples, tied to brand blue (#3A48C7) and plum */
+    --c-sand:     #E8E4DB;   /* warm neutral grey */
+    --c-sand-2:   #E8E4DB;   /* newsletter — same as sand */
+    --c-sage:     #DBD4EA;   /* soft lilac */
+    --c-lavender: #C4BCDE;   /* mid lavender */
+    --c-blue:     #9A94C7;   /* saturated periwinkle (brand-aligned) */
+    --c-clay-warm:#BDCCB4;   /* sage green — breaks the purple run */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink-2); }
+  body {
+    font-family: 'Figtree', system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-feature-settings: "ss01", "cv11";
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 900px;
+    background-image:
+      linear-gradient(90deg,
+        rgba(248, 248, 246, 0.95) 0%,
+        rgba(248, 248, 246, 0.88) 28%,
+        rgba(248, 248, 246, 0.6) 48%,
+        rgba(248, 248, 246, 0.22) 66%,
+        rgba(248, 248, 246, 0) 85%),
+      url("hero-bg.png");
+    background-size: cover, cover;
+    background-position: top right, top right;
+    background-repeat: no-repeat, no-repeat;
+    pointer-events: none;
+    z-index: 1;
+    mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, rgba(0,0,0,0) 100%);
+  }
+
+  .serif, .serif p, .serif blockquote {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', 'Georgia', serif;
+    font-feature-settings: "ss01";
+  }
+
+  h1, h2, h3, h4, .sans {
+    font-family: 'Figtree', system-ui, sans-serif;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  h1 {
+    font-size: clamp(56px, 8.2vw, 132px);
+    line-height: 0.92;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+  }
+  h2 {
+    font-size: clamp(36px, 4.6vw, 68px);
+    line-height: 1.02;
+    font-weight: 400;
+    letter-spacing: -0.028em;
+  }
+  h3 {
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+  }
+  p { font-size: 17px; line-height: 1.6; color: var(--ink-2); }
+  a { color: inherit; text-decoration: none; }
+
+  .eyebrow {
+    font-family: 'Figtree', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .btn {
+    font-family: 'Figtree', sans-serif;
+    background: #3A48C7;
+    color: #FFFFFF;
+    border: 0;
+    border-radius: 999px;
+    padding: 16px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .btn:hover { background: #2C389E; }
+  .btn .arrow { font-family: 'Figtree', sans-serif; font-weight: 300; font-size: 18px; }
+
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 0 56px; }
+
+  /* ————————— NAV ————————— */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 32px 12px;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    height: 3.25rem;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background-color: rgba(240, 239, 236, 0.7);
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.15);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .brand img { height: 26px; width: 120px; display: block; }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a { color: #000; transition: opacity 0.15s ease; }
+  .nav-links a:hover { opacity: 0.7; }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.25rem;
+    min-width: 96px;
+    padding: 8px 28px;
+    border-radius: 999px;
+    background-color: rgba(240, 239, 236, 0.7);
+    box-shadow: 0 0 30px rgba(22, 20, 24, 0.12), 0 4px 20px rgba(22, 20, 24, 0.1);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .nav-cta:hover {
+    box-shadow: 0 0 36px rgba(22, 20, 24, 0.16), 0 6px 24px rgba(22, 20, 24, 0.12);
+    transform: translateY(-1px);
+  }
+
+  /* ————————— HERO ————————— */
+  .hero { position: relative; padding-top: 140px; z-index: 2; }
+  .hero-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 56px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .hero-meta span:last-child { font-feature-settings: "tnum"; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .hero-copy h1 { margin-bottom: 0; }
+  .hero-copy h1 .italic {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+  .hero-lede {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    font-weight: 400;
+    max-width: 520px;
+    margin-top: 24px;
+  }
+  .hero-footnote {
+    margin-top: 14px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--plum);
+  }
+
+  .hero-card {
+    background: var(--paper-deep);
+    padding: 36px 32px 32px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+  }
+  .hero-card .blob {
+    position: relative;
+    aspect-ratio: 4/3;
+    margin: -12px -12px 28px;
+    overflow: hidden;
+  }
+  .hero-card .blob img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-card .eyebrow { margin-bottom: 10px; }
+  .hero-card h3 {
+    font-family: 'Figtree', sans-serif;
+    font-size: 26px;
+    line-height: 1.1;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 24px;
+    max-width: 300px;
+    letter-spacing: -0.018em;
+  }
+  .hero-card h3 em {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+  .hero-card .meta-row {
+    display: flex;
+    gap: 28px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .hero-card .meta-row strong {
+    display: block;
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-transform: none;
+    margin-bottom: 2px;
+  }
+
+  /* ————————— FEATURES (3-up image cards with aura bg) ————————— */
+  .features {
+    padding: 140px 0 160px;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .features::before {
+    content: "";
+    position: absolute;
+    inset: -80px -40px;
+    background:
+      radial-gradient(ellipse 50% 55% at 50% 45%, rgba(110,108,221,0.22) 0%, rgba(110,108,221,0) 65%),
+      radial-gradient(ellipse 30% 45% at 8% 80%, rgba(230,190,210,0.22) 0%, rgba(230,190,210,0) 60%);
+    filter: blur(30px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .features-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px;
+  }
+  .feature-card { display: flex; flex-direction: column; }
+  .feature-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 32px;
+    background: var(--paper-deep);
+  }
+  .feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .feature-card h3 {
+    font-family: 'Figtree', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .feature-card p {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ————————— STACK (Academy section cards) ————————— */
+  .stack {
+    position: relative;
+    z-index: 2;
+    padding: 160px 0 140px;
+  }
+  .stack-intro {
+    max-width: 1360px;
+    margin: 0 auto 40px;
+    padding: 0 56px;
+    text-align: left;
+  }
+  .stack-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .stack-intro h2 {
+    font-size: clamp(36px, 4.4vw, 56px);
+    line-height: 1.02;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .stack-intro h2 em {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .stack-intro p {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: 20px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    max-width: 640px;
+  }
+
+  .s-card {
+    position: relative;
+    border-radius: 14px;
+    padding: 44px 48px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    color: var(--ink);
+    overflow: hidden;
+    min-height: 240px;
+  }
+  .s-card h3 {
+    font-family: 'Figtree', sans-serif;
+    font-size: clamp(26px, 2.8vw, 36px);
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin-bottom: 14px;
+    max-width: 520px;
+  }
+  .s-card h3 em {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+  .s-card p {
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 480px;
+    margin-bottom: 28px;
+  }
+  .s-btn {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: 1px solid rgba(22,20,24,0.32);
+    color: var(--ink);
+    font-family: 'Figtree', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: -0.005em;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .s-btn:hover { background: rgba(22,20,24,0.06); border-color: rgba(22,20,24,0.5); }
+
+  .s-card {
+    background: #FFFFFF;
+    box-shadow:
+      inset 0 2px 4px rgba(22,20,24,0.06),
+      inset 0 -1px 0 rgba(255,255,255,0.9);
+    border: 1px solid rgba(22,20,24,0.07);
+  }
+  .s--sand, .s--sage, .s--lavender, .s--blue, .s--clay, .s--sand-deep { background: #FFFFFF; }
+
+  /* Courses card with inline featured tiles */
+  .s--courses { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.2fr); }
+  .featured-courses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-self: stretch;
+  }
+  .featured-courses--single {
+    grid-template-columns: 1fr;
+  }
+  .f-course {
+    background: #FFFFFF;
+    border: 1.5px solid #3A48C7;
+    border-radius: 10px;
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(58,72,199,0.12), 0 1px 3px rgba(22,20,24,0.05);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .f-course:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(58,72,199,0.18), 0 1px 3px rgba(22,20,24,0.06);
+  }
+  .f-course .f-eyebrow {
+    font-family: 'Figtree', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: rgba(22,20,24,0.62);
+    margin-bottom: 16px;
+  }
+  .f-course .f-title {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    max-width: 160px;
+  }
+  .f-course .f-arrow {
+    margin-top: 22px;
+    font-size: 18px;
+    font-weight: 300;
+    color: #3A48C7;
+  }
+
+  .s-art {
+    justify-self: end;
+    align-self: center;
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+  }
+
+  /* White UI chip with soft lift */
+  .chip {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 28px 30px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow:
+      0 1px 2px rgba(22,20,24,0.04),
+      0 12px 32px rgba(22,20,24,0.09);
+    border: 1px solid rgba(22,20,24,0.05);
+    font-family: 'Figtree', sans-serif;
+    color: var(--ink);
+  }
+
+  /* Community — avatar stack + online dot (green accent) */
+  .chip--avatars { display: flex; flex-direction: column; gap: 16px; }
+  .avatar-row { display: flex; align-items: center; justify-content: space-between; }
+  .avatar-stack { display: flex; }
+  .avatar-stack span {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+    margin-left: -12px;
+    display: block;
+  }
+  .avatar-stack span:nth-child(1) { margin-left: 0; background: linear-gradient(135deg, #C9B0E0, #8E6EC2); }
+  .avatar-stack span:nth-child(2) { background: linear-gradient(135deg, #B8C0E5, #6A68B8); }
+  .avatar-stack span:nth-child(3) { background: linear-gradient(135deg, #D8CFEE, #A89DD0); }
+  .online-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 500; color: var(--ink-2);
+  }
+  .online-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #5D4BD4;
+    box-shadow: 0 0 0 4px rgba(93,75,212,0.18);
+  }
+  .chip-caption {
+    font-size: 13px;
+    color: var(--ink-3);
+    font-weight: 500;
+    letter-spacing: -0.002em;
+  }
+
+  /* Events — mini calendar (yellow accent) */
+  .chip--calendar { display: flex; flex-direction: column; gap: 14px; }
+  .cal-head {
+    font-size: 13px; font-weight: 600; color: var(--ink-3);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 7px;
+  }
+  .cal-grid span {
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-2);
+    border-radius: 8px;
+  }
+  .cal-grid .day { color: var(--ink-3); font-size: 11px; font-weight: 600; text-transform: uppercase; }
+  .cal-grid .active {
+    background: linear-gradient(135deg, #5D4BD4 0%, #3A48C7 100%);
+    color: #FFFFFF;
+    box-shadow: 0 3px 10px rgba(58,72,199,0.4);
+    font-weight: 600;
+  }
+
+  /* Superusers — star rating (pink accent) */
+  .chip--rating { display: flex; flex-direction: column; gap: 12px; }
+  .rating-label {
+    font-size: 13px; font-weight: 600; color: var(--ink-3);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .stars { display: flex; gap: 4px; }
+  .stars svg { width: 26px; height: 26px; display: block; }
+  .rating-meta { font-size: 14px; color: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+
+  /* Team — message input with send button (purple accent) */
+  .chip--message { padding: 20px 20px; }
+  .msg-label {
+    font-size: 13px; font-weight: 600; color: var(--ink-3);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0 4px 12px;
+  }
+  .msg-input {
+    display: flex; align-items: center;
+    gap: 10px;
+    background: rgba(22,20,24,0.05);
+    border-radius: 999px;
+    padding: 8px 8px 8px 18px;
+  }
+  .msg-input .placeholder {
+    font-size: 14px; color: var(--ink-3);
+    flex: 1;
+  }
+  .send-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 0;
+    background: linear-gradient(135deg, #5D4BD4 0%, #3A48C7 100%);
+    color: #fff;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(58,72,199,0.4);
+    cursor: pointer;
+  }
+
+  /* Newsletter variant */
+  .s--newsletter { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .s--newsletter p { margin-bottom: 0; }
+  .newsletter-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .newsletter-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    background: #EEE8F5;
+    border: 1px solid #D8CFEA;
+    border-radius: 12px;
+    padding: 6px;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(106,79,192,0.08);
+  }
+  .newsletter-form input[type="email"] {
+    border: 0;
+    outline: 0;
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: transparent;
+    padding: 14px 16px;
+    width: 100%;
+  }
+  .newsletter-form input::placeholder { color: var(--ink-3); }
+  .newsletter-form button {
+    background: linear-gradient(135deg, #5D4BD4 0%, #3A48C7 100%);
+    color: #fff;
+    border: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 300;
+    transition: filter 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(58,72,199,0.35);
+  }
+  .newsletter-form button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .newsletter-note {
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+
+  /* ————————— ABOUT ————————— */
+  .about {
+    padding: 160px 0;
+    background: var(--paper-deep);
+  }
+  .about-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 96px;
+    align-items: start;
+  }
+  .about .eyebrow { margin-bottom: 28px; }
+  .about h2 { max-width: 440px; }
+  .about h2 em {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .about-body {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    max-width: 560px;
+    padding-top: 8px;
+  }
+  .about-body p {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: 22px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    color: var(--ink-2);
+  }
+  .about-body p:first-child {
+    font-size: 28px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+  .about-body p:first-child::first-letter {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.4em;
+    line-height: 1;
+    color: var(--plum);
+  }
+
+  /* ————————— CURRICULUM ————————— */
+  .curriculum {
+    padding: 140px 0 140px;
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+  .curriculum-inner { padding: 0 56px; }
+  .curriculum-frame {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .curriculum-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px 40px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 0;
+  }
+  .curriculum-head h2 {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .curriculum-head .sub {
+    font-family: 'Figtree', sans-serif;
+    color: var(--ink-3);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .curriculum-head .expand {
+    font-family: 'Figtree', sans-serif;
+    color: #3A48C7;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0;
+    border: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: transparent;
+  }
+  .curriculum-head .expand:hover { color: #2C389E; }
+
+  .chapter { border-bottom: 1px solid var(--rule); }
+  .chapter:last-of-type { border-bottom: 0; }
+  .chapter summary {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 40px;
+    cursor: pointer;
+    list-style: none;
+    position: relative;
+  }
+  .chapter summary::-webkit-details-marker { display: none; }
+  .chapter summary:hover .title { color: #3A48C7; }
+  .chapter .num {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 400;
+    color: var(--ink-3);
+    font-size: 16px;
+  }
+  .chapter .title {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    transition: color 0.2s ease;
+  }
+  .chapter .count { display: none; }
+  .chapter .chev {
+    width: 9px; height: 9px;
+    border-right: 1px solid var(--ink-3);
+    border-bottom: 1px solid var(--ink-3);
+    transform: rotate(45deg);
+    transition: transform 0.25s ease;
+    margin-bottom: 3px;
+  }
+  .chapter[open] .chev { transform: rotate(-135deg); margin-bottom: -3px; }
+  .lessons { padding: 0 40px 8px; }
+  .lesson {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0 16px 40px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .lesson .lnum { display: none; }
+  .lesson .lock {
+    grid-column: 1;
+    grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0;
+    color: var(--ink-3);
+  }
+  .lesson .lock svg { width: 14px; height: 14px; opacity: 0.7; }
+  .lesson > span:not(.lnum):not(.lock) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* ————————— FINAL CTA (Try Claren gradient banner) ————————— */
+  .final {
+    position: relative;
+    min-height: 33rem;
+    padding: 56px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-image: url("cta-bg.webp");
+    background-size: cover;
+    background-position: top right;
+    background-repeat: no-repeat;
+  }
+  .final-inner {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .final-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .final h2 {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1.0;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #000;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin: 0;
+  }
+  .final h2 .claren-mark {
+    height: clamp(40px, 7.5vw, 88px);
+    width: auto;
+    display: inline-block;
+    transform: translateY(0.08em);
+  }
+  .final-lede {
+    font-family: 'Figtree', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #000;
+    max-width: 560px;
+    margin: 0;
+  }
+  .final-buttons {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+  }
+  .final-buttons a {
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .final-buttons .btn-primary {
+    background: #3A48C7;
+    color: #FFFFFF;
+  }
+  .final-buttons .btn-primary:hover { background: #2C389E; }
+  .final-buttons .btn-secondary {
+    background: #FFFFFF;
+    color: #000;
+    border: 1px solid rgba(0,0,0,0.12);
+  }
+  .final-buttons .btn-secondary:hover { box-shadow: 0 3px 10px rgba(22,20,24,0.1); }
+
+  /* Enrollment card floating on the gradient banner */
+  .course-enroll {
+    position: absolute;
+    top: 40px;
+    right: 56px;
+    z-index: 2;
+    background: #FFFFFF;
+    border: 1px solid rgba(22,20,24,0.06);
+    border-radius: 14px;
+    padding: 24px 28px 22px;
+    width: 340px;
+    box-shadow: 0 12px 36px rgba(22,20,24,0.10), 0 1px 2px rgba(22,20,24,0.04);
+  }
+  .course-enroll .eyebrow {
+    font-family: 'Figtree', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+  }
+  .course-enroll h4 {
+    font-family: 'Figtree', sans-serif;
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 20px;
+    letter-spacing: -0.015em;
+  }
+  .course-enroll h4 em {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+  .course-price {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: 'Figtree', sans-serif;
+  }
+  .course-price .price-was {
+    font-size: 14px;
+    color: var(--ink-3);
+    text-decoration: line-through;
+    letter-spacing: 0.01em;
+  }
+  .course-price .price-now {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .course-enroll .enroll-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #3A48C7;
+    color: #FFFFFF;
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 22px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none;
+  }
+  .course-enroll .enroll-btn:hover { background: #2C389E; }
+  .course-enroll .enroll-btn .arrow { font-size: 16px; font-weight: 300; }
+
+  /* ————————— FOOTER ————————— */
+  footer {
+    font-family: 'Figtree', sans-serif;
+    color: #000;
+    background: #F8F8F6;
+    position: relative;
+  }
+  .foot-main {
+    padding: 56px;
+  }
+  .foot-top {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .foot-address {
+    font-family: 'Lardent Pro', 'Fraunces', 'Cormorant Garamond', serif;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #000;
+    font-weight: 400;
+  }
+  .foot-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, auto));
+    gap: 28px 64px;
+  }
+  .foot-links a {
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #000;
+    transition: opacity 0.15s ease;
+  }
+  .foot-links a:hover { opacity: 0.7; }
+  .foot-spacer { height: 224px; }
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .foot-brand img {
+    height: 32px;
+    width: auto;
+    display: block;
+  }
+  .foot-copy {
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    color: #000;
+    letter-spacing: 0.04em;
+  }
+  .foot-rainbow {
+    height: 10px;
+    background: linear-gradient(to right, #a1f3f6 8.7%, #80d12a 22.6%, #dfcf1c 34.6%, #be6eff 80%, #3a48c7 100%);
+  }
+  .foot-bottom-spacer { height: 24px; background: #F8F8F6; }
+
+  /* ————————— RESPONSIVE ————————— */
+  @media (max-width: 1040px) {
+    .wrap, .hero-inner, .features-inner, .final-inner { padding-left: 32px; padding-right: 32px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+    .features { padding: 96px 0; margin-top: 80px; }
+    .features-grid { grid-template-columns: 1fr; gap: 32px; }
+    .stack { padding: 96px 0; }
+    .stack-intro { padding: 0 32px; }
+    .stack-inner { padding: 0 32px; }
+    .s-card { grid-template-columns: 1fr; gap: 28px; padding: 32px 28px; }
+    .s-art { justify-self: start; max-width: 220px; }
+    .s--newsletter { grid-template-columns: 1fr; }
+    .about { padding: 96px 0; }
+    .about-inner { grid-template-columns: 1fr; gap: 56px; }
+    .curriculum { padding: 96px 0; }
+    .chapter summary { grid-template-columns: 32px 1fr auto; gap: 14px; padding: 20px 24px; }
+    .chapter .title { font-size: 19px; }
+    .curriculum-head { padding: 22px 24px; }
+    .lessons { padding: 0 24px 8px; }
+    .lesson { padding-left: 32px; }
+    .nav-links { display: none; }
+    .final { padding: 32px; min-height: 24rem; }
+    .final-inner { flex-direction: column; gap: 32px; }
+    .final h2 { font-size: clamp(40px, 10vw, 72px); }
+    .final-buttons { align-self: flex-start; }
+    .course-enroll { position: static; width: 100%; max-width: 340px; margin-bottom: 24px; top: auto; right: auto; }
+    .foot-main { padding: 32px; }
+    .foot-top { flex-direction: column; gap: 40px; }
+    .foot-links { grid-template-columns: repeat(3, auto); gap: 20px 32px; }
+    .foot-spacer { height: 80px; }
+    .foot-bottom { flex-direction: row; align-items: center; gap: 16px; }
+    .hero { padding-top: 160px; }
+  }
+  @media (max-width: 540px) {
+    .featured-courses { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="https://www.claren.law" class="brand" aria-label="Claren"><img src="claren-logo-colour.svg" alt="Claren" /></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="https://www.claren.law/?product=ai#features">Features</a>
+      <a href="https://www.claren.law/?product=ai#pricing">Pricing</a>
+      <a href="https://www.claren.law/blog">Blog</a>
+    </div>
+    <a href="https://claren.thinkific.com/hub" class="nav-cta">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>Master<br/>Legal <span class="italic">AI.</span></h1>
+        <p class="hero-lede">Legal work is time-consuming, repetitive, and unforgiving. Claren changes that. Average users save ten-plus hours a week — this course shows you exactly how: automate drafting, accelerate research, and free up time for the work that actually matters.</p>
+        <div class="hero-footnote">Usually $200 — Free for a limited time.</div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="blob" aria-hidden="true">
+          <img src="academy.jpg" alt="" />
+        </div>
+        <div class="eyebrow">The Course</div>
+        <h3>Get Legal <em>Superpowers</em></h3>
+        <a class="btn" href="https://claren.thinkific.com/hub">
+          <span>Start Learning Now</span>
+          <span class="arrow">→</span>
+        </a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMY SECTION CARD STACK -->
+<section class="stack" id="courses">
+  <div class="stack-intro">
+    <h2>Everything in <em>Claren Academy.</em></h2>
+    <p>Courses, guides, and resources covering AI legal research, contract analysis, redlining, and everything in between.</p>
+  </div>
+  <div class="stack-inner">
+
+    <!-- 1. Course Library -->
+    <div class="s-card s--sand s--courses">
+      <div>
+        <h3>Course Library</h3>
+        <p>Short, focused lessons on AI legal research tools, AI contract review, and the day-to-day workflows that make Claren click. Work at your own pace and build real skills fast.</p>
+        <a class="s-btn" href="https://claren.thinkific.com/hub">See all courses</a>
+      </div>
+      <div class="featured-courses featured-courses--single">
+        <a class="f-course" href="#">
+          <div>
+            <div class="f-eyebrow">Featured Course</div>
+            <div class="f-title">Get Legal Superpowers</div>
+          </div>
+          <div class="f-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Community -->
+    <div class="s-card s--sage">
+      <div>
+        <h3>Claren Community</h3>
+        <p>Swap tips, share playbooks, and trade solutions with a network of legal professionals putting AI contract review software and legal redlining software to work every day.</p>
+        <a class="s-btn" href="https://claren.thinkific.com/hub">Join the community</a>
+      </div>
+      <div class="s-art" aria-hidden="true">
+        <div class="chip chip--avatars">
+          <div class="avatar-row">
+            <div class="avatar-stack"><span></span><span></span><span></span></div>
+            <div class="online-pill"><span class="online-dot"></span><span>Online</span></div>
+          </div>
+          <div class="chip-caption">1,240 legal pros</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Events -->
+    <div class="s-card s--lavender">
+      <div>
+        <h3>Claren Events</h3>
+        <p>Workshops, webinars, and in-person meetups throughout the year. See what's coming up, save your spot, and meet likeminded people who are super bullish on the future of legal AI.</p>
+        <a class="s-btn" href="https://claren.thinkific.com/hub">See what's on</a>
+      </div>
+      <div class="s-art" aria-hidden="true">
+        <div class="chip chip--calendar">
+          <div class="cal-head">April</div>
+          <div class="cal-grid">
+            <span class="day">M</span><span class="day">T</span><span class="day">W</span><span class="day">T</span><span class="day">F</span>
+            <span>14</span><span class="active">15</span><span>16</span><span>17</span><span>18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Superusers -->
+    <div class="s-card s--blue">
+      <div>
+        <h3>Hear from our superusers</h3>
+        <p>See how teams in finance, healthcare, real estate, tech, and early-stage startups are using Claren for AI contract review, redlining, and research; and moving faster because of it.</p>
+        <a class="s-btn" href="https://claren.thinkific.com/hub">Read their stories</a>
+      </div>
+      <div class="s-art" aria-hidden="true">
+        <div class="chip chip--rating">
+          <div class="rating-label">Customer rating</div>
+          <div class="stars">
+            <svg viewBox="0 0 24 24" fill="#5D4BD4"><path d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#5D4BD4"><path d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#5D4BD4"><path d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#5D4BD4"><path d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/></svg>
+            <svg viewBox="0 0 24 24">
+              <defs>
+                <linearGradient id="star90" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="90%" stop-color="#5D4BD4"/>
+                  <stop offset="90%" stop-color="#D8D2C5"/>
+                </linearGradient>
+              </defs>
+              <path fill="url(#star90)" d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6z"/>
+            </svg>
+          </div>
+          <div class="rating-meta">4.9 · 2,134 reviews</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Direct access to Claren team -->
+    <div class="s-card s--clay">
+      <div>
+        <h3>Direct access to the Claren team</h3>
+        <p>Got a question about contract analysis AI, redlining software, or anything else in the platform? Talk straight to the team.</p>
+        <a class="s-btn" href="https://claren.thinkific.com/hub">Ask the team</a>
+      </div>
+      <div class="s-art" aria-hidden="true">
+        <div class="chip chip--message">
+          <div class="msg-label">Ask the team</div>
+          <div class="msg-input">
+            <span class="placeholder">Type a question…</span>
+            <button class="send-btn" aria-label="Send">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Newsletter -->
+    <div class="s-card s--sand-deep s--newsletter">
+      <div>
+        <h3>Sign up to the newsletter</h3>
+        <p>Research, frameworks, and resources on how legal teams are collaborating with AI. Delivered bi-weekly. Unsubscribe anytime.</p>
+      </div>
+      <div class="newsletter-right">
+        <form class="newsletter-form" onsubmit="event.preventDefault(); var e = this.querySelector('input[type=email]').value; window.open('https://2foqsw.share-eu1.hsforms.com/27V8Jy8nhTQO0GhP1bLyvyw' + (e ? '?email=' + encodeURIComponent(e) : ''), '_blank', 'noopener');">
+          <input type="email" placeholder="Enter your email" aria-label="Email address" required />
+          <button type="submit" aria-label="Subscribe">→</button>
+        </form>
+        <div class="newsletter-note">Please enter your email address to receive our bi-weekly Claren Academy newsletter. Unsubscribe at any time.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="enroll">
+  <aside class="course-enroll">
+    <div class="eyebrow">The Course</div>
+    <h4>Enroll in <em>Claren Academy</em></h4>
+    <div class="course-price">
+      <span class="price-was">Was $200</span>
+      <span class="price-now">Free</span>
+    </div>
+    <a href="https://claren.thinkific.com/hub" class="enroll-btn">
+      <span>Enroll now</span>
+      <span class="arrow">→</span>
+    </a>
+  </aside>
+  <div class="final-inner">
+    <div class="final-left">
+      <h2>
+        Try
+        <img src="claren-logo-colour.svg" alt="Claren" class="claren-mark" />
+      </h2>
+      <p class="final-lede">Get hours back every week, slash your contract backlog, and give your legal team the power to deliver faster without sacrificing quality.</p>
+    </div>
+    <div class="final-buttons">
+      <a href="https://www.claren.law/sign-up" class="btn-primary">Try for free</a>
+      <a href="https://www.claren.law/demo" class="btn-secondary">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-main">
+    <div class="foot-top">
+      <div class="foot-address">
+        Claren,<br/>
+        24 Southwark Bridge Road,<br/>
+        London, SE1 2HJ
+      </div>
+      <nav class="foot-links">
+        <a href="https://www.claren.law/?product=ai#why-claren">Why Claren</a>
+        <a href="https://www.claren.law/blog">Blog</a>
+        <a href="https://www.claren.law/legal/terms-of-service">Terms</a>
+        <a href="https://www.claren.law/?product=ai#features">Features</a>
+        <a href="https://jobs.ashbyhq.com/wilson" target="_blank" rel="noopener noreferrer">Careers</a>
+        <a href="https://www.claren.law/security">Security</a>
+        <a href="https://www.claren.law/?product=ai#pricing">Pricing</a>
+        <a href="https://www.linkedin.com/company/wilsonai-company/" target="_blank" rel="noopener noreferrer">Linkedin</a>
+        <a href="https://www.claren.law/legal/privacy-policy">Privacy</a>
+      </nav>
+    </div>
+    <div class="foot-spacer"></div>
+    <div class="foot-bottom">
+      <a href="/" class="foot-brand" aria-label="Claren"><img src="claren-logo-colour.svg" alt="Claren" /></a>
+      <div class="foot-copy">&copy; 2026 Claren.AI. All Rights Reserved.</div>
+    </div>
+  </div>
+  <div class="foot-rainbow" aria-hidden="true"></div>
+  <div class="foot-bottom-spacer"></div>
+</footer>
+
+</body>
+</html>
